@@ -2,15 +2,15 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import useModal from './modal/use-modal';
 import Modal from "./modal/modal";
-import logo from './logo.svg';
-import './App.css';
+import Hole from './hole'
+import './app.scss';
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  const [course, setCourse] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [course, setCourse] = useState(null);
 	const [modalClass, setModalClass] = useState(null);
 	const [modalContent, setModalContent] = useState(null);
-  const { modalView, modalToggle } = useModal();
+	const { modalView, modalToggle } = useModal();
 
 	let content = {};
 
@@ -37,29 +37,56 @@ function App() {
   if (loading || course == null) {
 		content.list = <div>Loading...</div>;
 	} else {
+		let yardsOut,
+			yardsIn,
+			yards,
+			parOut,
+			parIn,
+			par;
+
 		content.list = course.tees.map((item) => {
-      console.log(item);
+			yardsOut = 0;
+			yardsIn = 0;
+			yards = 0;
+			parOut = 0;
+			parIn = 0;
+			par = 0;
+			return (
+				<div className="tee-container">
+					<div className="scorecard">
+						<div className="header">
+							<div className="tee">{item.tee} {item.gender}</div>
+						</div>
+						{item.holes.map((hole, i) => {
+							yards = yards + Number(hole.yards);
+							par = par + Number(hole.par);
+							if (i < 9) {
+								yardsOut = yardsOut + Number(hole.yards);
+								parOut = parOut + Number(hole.par);
+							}
+							if (i > 8) {
+								yardsIn = yardsIn + Number(hole.yards);
+								parIn = parIn + Number(hole.par);
+							}
+							return (
+								<Hole index={i} item={hole} yardsOut={yardsOut} yardsIn={yardsIn} yards={yards} parOut={parOut} parIn={parIn} par={par} />
+							);
+						})}
+						<div className="footer">
+							<div>Slope {item.slope}</div>
+							<div>Rating {item.rating}</div>
+						</div>
+					</div>
+				</div>
+			);
 		});
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	<div className="course">
+		{content.list}
+	</div>
+	)
 }
 
 export default App;
