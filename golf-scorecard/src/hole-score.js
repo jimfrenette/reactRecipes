@@ -74,12 +74,12 @@ function HoleScore(props) {
 				<div>{props.item.number}</div>
 				<div className="yards">{props.item.yards}</div>
 				<div>{props.item.par}</div>
-				<div><input name={strokesInput} type="tel" required="" aria-required="true" onChange={props.scoreChange} maxlength="2" defaultValue={props.item.strokes} readonly={props.locked} /></div>
+				<div><input name={strokesInput} type="tel" required="" aria-required="true" onChange={props.scoreChange} maxLength="2" defaultValue={props.item.strokes} readOnly={props.locked} /></div>
 				<div>{props.item.handicap}</div>
-				<div className="adv"><input name={puttsInput} type="tel" required="" aria-required="false" onChange={props.scoreChange} maxlength="1" defaultValue={props.item.putts} readonly={props.locked} /></div>
-				<div className="adv"><input name={fairwayInput} type="text" required="" aria-required="false" maxlength="1" defaultValue={props.item.fairway} readonly={props.locked} /></div>
-				<div className="adv"><input name={bunkerInput} type="tel" required="" aria-required="false" onChange={props.scoreChange} maxlength="1" defaultValue={props.item.bunker} readonly={props.locked} /></div>
-				<div className="adv"><input name={penaltyInput} type="tel" required="" aria-required="false" onChange={props.scoreChange} maxlength="1" defaultValue={props.item.penalty} readonly={props.locked} /></div>
+				<div className="adv"><input name={puttsInput} type="tel" required="" aria-required="false" onChange={props.scoreChange} maxLength="1" defaultValue={props.item.putts} readOnly={props.locked} /></div>
+				<div className="adv"><input name={fairwayInput} type="text" required="" aria-required="false" maxLength="1" defaultValue={props.item.fairway} readOnly={props.locked} /></div>
+				<div className="adv"><input name={bunkerInput} type="tel" required="" aria-required="false" onChange={props.scoreChange} maxLength="1" defaultValue={props.item.bunker} readOnly={props.locked} /></div>
+				<div className="adv"><input name={penaltyInput} type="tel" required="" aria-required="false" onChange={props.scoreChange} maxLength="1" defaultValue={props.item.penalty} readOnly={props.locked} /></div>
 			</div>
 			{contentOut}
 			{contentIn}

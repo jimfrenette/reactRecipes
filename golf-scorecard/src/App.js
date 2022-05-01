@@ -100,13 +100,13 @@ function App() {
 				</div>
 			);
 		});
-  }
+	}
 
-  return (
-	<div className="course">
-		{content.list}
-		{/* <Modal modalView={modalView} hide={modalToggle} content={modalContent} classes={modalClass} /> */}
-	</div>
+	return (
+		<div className="course">
+			{content.list}
+			<Modal modalView={modalView} hide={modalToggle} content={modalContent} classes={modalClass} />
+		</div>
 	)
 }
 

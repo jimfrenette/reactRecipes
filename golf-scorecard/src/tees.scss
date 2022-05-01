@@ -2,6 +2,20 @@
 	padding-top: 1rem;
 	margin-bottom: 1.5rem;
 	max-width: 30rem;
+
+	input {
+		box-sizing: border-box;
+		font-family: inherit;
+		box-shadow: 0 0 0 transparent;
+		border-radius: 4px;
+		border: 1px solid #8c8f94;
+		background-color: #fff;
+		color: #2c3338;
+	}
+
+	input[readonly] {
+		background-color: #f0f0f1;
+	}
 }
 
 .scorecard {
@@ -17,6 +31,10 @@
 		}
 		.btn ~ .btn {
 			margin-left: 10px;
+		}
+
+		.golfer {
+			min-width: 100%;
 		}
 	}
 
@@ -41,6 +59,17 @@
 			white-space: nowrap;
 			border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 		}
+
+		input {
+			display: inline-block;
+			padding: 0 2px;
+			text-align: center;
+			width: 24px;
+			font-size: inherit;
+			line-height: 1.5;
+			min-height: 24px;
+			text-transform: uppercase;
+		}
 	}
 
 	.footer {
@@ -55,20 +84,10 @@
 			padding: 0.5rem;
 		}
 	}
-
-	.hole input {
-		display: inline-block;
-		padding: 0 2px;
-		text-align: center;
-		width: 24px;
-		font-size: inherit;
-		line-height: 1.5;
-		min-height: 24px;
-		text-transform: uppercase;
-	}
 }
 
 .edit {
+
 	.tee-container {
 		max-width: 700px;
 	}
@@ -137,16 +156,6 @@
 
 		.footer label {
 			display: block;
-		}
-
-		input {
-			&[name='slope'] {
-				width: 40px;
-			}
-
-			&[name='rating'] {
-				width: 46px;
-			}
 		}
 
 		.notes {
@@ -228,10 +237,6 @@
 
 		&.sum {
 			min-width: 10%;
-
-			>div.out {
-				width: 50%;
-			}
 
 			~.hole {
 				margin-top: auto;

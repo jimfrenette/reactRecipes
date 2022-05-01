@@ -249,7 +249,6 @@ function Score(props) {
 		if (response.status == 200) {
 			setPosted(
 				<div>
-					<div>Golfer: <b>{data.golfer.display_name}</b></div>
 					<div>Score: <b>{data.strokesTotal}</b></div>
 					<div>{data.course}, {data.location}</div>
 					<div>{data.tee}, {data.gender}, rating {data.rating} / slope {data.slope}</div>
@@ -273,7 +272,6 @@ function Score(props) {
 			<div className="tee-container">
 			<div className="scorecard">
 				<div className="header">
-					<div className="golfer">{props.content.golfer.display_name}</div>
 					<div className="tee">{props.content.tee} {props.content.gender}</div>
 					{props.action == 'update' &&
 						<Button click={lockToggle} label={`${locked == 'readonly' ? 'edit' : 'view'}`} />
@@ -321,10 +319,10 @@ function Score(props) {
 				})}
 				<div className="footer">
 					<div className="date-field">
-						<input type="date" name="date" id="date" defaultValue={props.content.date} readonly={locked} />
+						<input type="date" name="date" id="date" defaultValue={props.content.date} readOnly={locked} />
 					</div>
 					<div className="time-field">
-						<input type="time" name="time" id="time" defaultValue={props.content.time} readonly={locked} />
+						<input type="time" name="time" id="time" defaultValue={props.content.time} readOnly={locked} />
 					</div>
 					<div className="info">
 						<div>Slope {props.content.slope}</div>
@@ -332,8 +330,8 @@ function Score(props) {
 					</div>
 					<div>
 						<div className="notes">
-							<label for="notes">Notes</label>
-							<textarea name="notes" id="notes" defaultValue={props.content.notes} readonly={locked} />
+							<label htmlFor="notes">Notes</label>
+							<textarea name="notes" id="notes" defaultValue={props.content.notes} readOnly={locked} />
 						</div>
 						<div className="submit">
 							<input type="submit" value="Submit" disabled={`${locked == 'readonly' ? 'disabled' : ''}`} />
