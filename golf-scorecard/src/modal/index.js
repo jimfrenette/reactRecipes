@@ -1,15 +1,7 @@
-/**
- * MODAL
- *
- * @param {*} props
- * props.element: optionally append fragment to
- * @returns object
- */
 import React from 'react';
 import ReactDOM from 'react-dom'
 
 function Modal(props) {
-	props.element = props.element || document.body;
 	const fragClass = `light-modal ${props.classes || ''}`.trim();
 
 	return props.modalView ? ReactDOM.createPortal(
@@ -29,7 +21,7 @@ function Modal(props) {
 					</div>
 				</div>
 			</div>
-		</React.Fragment>, props.element
+		</React.Fragment>, document.body
 	) : null;
 }
 

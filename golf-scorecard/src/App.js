@@ -1,8 +1,10 @@
 import axios from 'axios';
+import Button from "./button";
 import { useState, useEffect } from 'react';
-import useModal from './modal/use-modal';
-import Modal from "./modal/modal";
+import useModal from './modal/use';
+import Modal from "./modal";
 import Hole from './hole'
+import Score from './score';
 import './app.scss';
 
 function App() {
@@ -34,7 +36,24 @@ function App() {
 		}
 	}
 
-  if (loading || course == null) {
+	function handleScoreClick(evt, item) {
+		try {
+			item['course'] = course.name;
+			item['location'] = course.location;
+
+			setModalClass("fullscreen edit");
+			setModalContent({
+				"heading": `${course.name}, ${course.location}`,
+				"body": <Score content={item} action="create" />
+			});
+
+			modalToggle();
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
+	if (loading || course == null) {
 		content.list = <div>Loading...</div>;
 	} else {
 		let yardsOut,
@@ -56,6 +75,7 @@ function App() {
 					<div className="scorecard">
 						<div className="header">
 							<div className="tee">{item.tee} {item.gender}</div>
+							<Button item={item} click={handleScoreClick} label='score' />
 						</div>
 						{item.holes.map((hole, i) => {
 							yards = yards + Number(hole.yards);
@@ -85,6 +105,7 @@ function App() {
   return (
 	<div className="course">
 		{content.list}
+		{/* <Modal modalView={modalView} hide={modalToggle} content={modalContent} classes={modalClass} /> */}
 	</div>
 	)
 }
