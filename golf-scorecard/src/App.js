@@ -16,7 +16,7 @@ function App() {
 
 	let content = {};
 
-  useEffect(() => {
+	useEffect(() => {
 		fetchData();
 	}, [])
 
@@ -37,6 +37,13 @@ function App() {
 	}
 
 	function handleScoreClick(evt, item) {
+		let action = 'create';
+		let sessionItem = JSON.parse(sessionStorage.getItem('golf_scorecard'));
+		if (sessionItem && sessionItem.tee_id == item.tee_id) {
+			item = sessionItem;
+			action = 'update';
+		}
+
 		try {
 			item['course'] = course.name;
 			item['location'] = course.location;
@@ -44,7 +51,7 @@ function App() {
 			setModalClass("fullscreen edit");
 			setModalContent({
 				"heading": `${course.name}, ${course.location}`,
-				"body": <Score content={item} action="create" />
+				"body": <Score content={item} action={action} />
 			});
 
 			modalToggle();

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios'; // for REST API
 import Button from "./button";
 import HoleScore from './hole-score'
 
@@ -30,6 +30,39 @@ function Score(props) {
 	}, []);
 
 	const postData = async (data) => {
+		/** In the real world, this would post to a REST API.
+			For this demo, we will use session storage and sessionScore state. */
+
+		// const SCORE_SVC_URL = `${rest_api_base_url}/score`;
+		const body = JSON.stringify(data);
+
+		try {
+			// setLoading(true);
+			// const response = await axios.post(SCORE_SVC_URL, body, {
+			// 	headers: {
+			// 		'Content-Type': 'application/json'
+			// 	}
+			// });
+
+			setLoading(false);
+
+			/** for REST API */
+			// handleResponse(response);
+
+			/** for demo */
+			window.sessionStorage.setItem('golf_scorecard', body)
+			setPosted(
+				<div>
+					<div>Score: <b>{data.strokesTotal}</b></div>
+					<div>{data.course}, {data.location}</div>
+					<div>{data.tee}, {data.gender}, rating {data.rating} / slope {data.slope}</div>
+					<div>{data.date}, {data.time}</div>
+					<div>Notes: {data.notes}</div>
+				</div>);
+		} catch (e) {
+			console.log(e);
+			setLoading(false);
+		}
 	}
 
 	let score,
@@ -72,17 +105,6 @@ function Score(props) {
 			}, true);
 		});
 
-		const advToggle = document.querySelector('.edit .adv-toggle');
-		advToggle.addEventListener('click', function (evt) {
-			[].slice.call(document.querySelectorAll('.edit .hole .adv')).forEach((el) => {
-				if (el.classList.contains('hide')) {
-					el.classList.remove('hide');
-				} else {
-					el.classList.add('hide');
-				}
-			}, true);
-		});
-
 		if (props.action == 'update') {
 			setLocked('readonly');
 			setStrokesOut(props.content.strokesOut);
@@ -101,6 +123,18 @@ function Score(props) {
 			setPenaltyIn(props.content.penaltyIn);
 			setPenaltyTotal(props.content.penaltyTotal);
 		}
+	}
+
+	function advToggle(evt) {
+		evt.preventDefault();
+
+		[].slice.call(document.querySelectorAll('.edit .hole .adv')).forEach((el) => {
+			if (el.classList.contains('hide')) {
+				el.classList.remove('hide');
+			} else {
+				el.classList.add('hide');
+			}
+		}, true);
 	}
 
 	function lockToggle(evt) {
@@ -244,24 +278,25 @@ function Score(props) {
 		}
 	}
 
-	function handleResponse(response) {
-		const data = JSON.parse(response.config.data);
-		if (response.status == 200) {
-			setPosted(
-				<div>
-					<div>Score: <b>{data.strokesTotal}</b></div>
-					<div>{data.course}, {data.location}</div>
-					<div>{data.tee}, {data.gender}, rating {data.rating} / slope {data.slope}</div>
-					<div>{data.date}, {data.time}</div>
-					<div>Notes: {data.notes}</div>
-				</div>);
-		} else {
-			setPosted(
-				<div>
-					<div>Error: <b>{response.status}</b> {response.statusText}</div>
-				</div>);
-		}
-	}
+    /** Uncomment this function when using a REST API **/
+	// function handleResponse(response) {
+	// 	const data = JSON.parse(response.config.data);
+	// 	if (response.status == 200) {
+	// 		setPosted(
+	// 			<div>
+	// 				<div>Score: <b>{data.strokesTotal}</b></div>
+	// 				<div>{data.course}, {data.location}</div>
+	// 				<div>{data.tee}, {data.gender}, rating {data.rating} / slope {data.slope}</div>
+	// 				<div>{data.date}, {data.time}</div>
+	// 				<div>Notes: {data.notes}</div>
+	// 			</div>);
+	// 	} else {
+	// 		setPosted(
+	// 			<div>
+	// 				<div>Error: <b>{response.status}</b> {response.statusText}</div>
+	// 			</div>);
+	// 	}
+	// }
 
 	if (posted) {
 		content =
@@ -314,6 +349,7 @@ function Score(props) {
 							penaltyOut={penaltyOut}
 							penaltyIn={penaltyIn}
 							penaltyTotal={penaltyTotal}
+							advToggle={advToggle}
 							scoreChange={handleScoreChange} />
 					);
 				})}

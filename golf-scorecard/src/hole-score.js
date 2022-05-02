@@ -1,3 +1,5 @@
+import Button from "./button";
+
 function HoleScore(props) {
 	let contentLabels,
 		contentOut,
@@ -18,7 +20,9 @@ function HoleScore(props) {
 				<div>Yards</div>
 				<div>Par</div>
 				<div className="label">Strokes</div>
-				<div className="adv-toggle">[adv]</div>
+				<div className="adv-toggle">
+					<Button click={props.advToggle} label="adv" />
+				</div>
 				<div className="label adv">Putts</div>
 				<div className="label adv">Fairway</div>
 				<div className="label adv">Bunker</div>
