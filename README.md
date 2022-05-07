@@ -1,7 +1,5 @@
 # react-recipes
 
-## Golf Scorecard
+## [Golf Scorecard](./golf-scorecard/)
 
-TODO:
-add score button for each course,
-save score record to local storage
+[website](https://jimfrenette.com/javascript/react/golf-scorecard/)
