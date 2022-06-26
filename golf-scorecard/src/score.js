@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 // import axios from 'axios'; // for REST API
 import Button from "./button";
 import HoleScore from './hole-score'
+import { digitVal } from './modules/common';
 
 function Score(props) {
 	const [loading, setLoading] = useState(false);
@@ -22,6 +23,9 @@ function Score(props) {
 	const [penaltyOut, setPenaltyOut] = useState(0);
 	const [penaltyIn, setPenaltyIn] = useState(0);
 	const [penaltyTotal, setPenaltyTotal] = useState(0);
+	const [girOut, setGirOut] = useState(0);
+	const [girIn, setGirIn] = useState(0);
+	const [girTotal, setGirTotal] = useState(0);
 
 	let content = {};
 
@@ -74,7 +78,7 @@ function Score(props) {
 		par = 0;
 
 	function init() {
-		const allowed = ['L', 'F', 'R'];
+		const allowed = ['L', 'F', 'R', 'T', 'S']; // T:Through, S:Short
 
 		[].slice.call(document.querySelectorAll(`input[name^='fairway_']`)).forEach((el) => {
 			el.addEventListener('keydown', function (evt) {
@@ -122,6 +126,9 @@ function Score(props) {
 			setPenaltyOut(props.content.penaltyOut);
 			setPenaltyIn(props.content.penaltyIn);
 			setPenaltyTotal(props.content.penaltyTotal);
+			setGirOut(props.content.girOut);
+			setGirIn(props.content.girIn);
+			setGirTotal(props.content.girTotal);
 		}
 	}
 
@@ -163,19 +170,6 @@ function Score(props) {
 		return sum;
 	}
 
-	/**
-	 * Replaces non-digit element value with an empty string
-	 * @param {*} el
-	 * @returns
-	 */
-	function digitVal(el) {
-		if (el.value && isNaN(el.value)) {
-			return el.value.replace(/[^\d]+/g,'');
-		} else {
-			return el.value;
-		}
-	}
-
 	function handleSubmit(evt) {
 		evt.preventDefault();
 
@@ -202,6 +196,9 @@ function Score(props) {
 		score['penaltyOut'] = penaltyOut;
 		score['penaltyIn'] = penaltyIn;
 		score['penaltyTotal'] = penaltyTotal;
+		score['girOut'] = girOut;
+		score['girIn'] = girIn;
+		score['girTotal'] = girTotal;
 
 		score['date'] = evt.target.elements.date.value;
 		score['time'] = evt.target.elements.time.value;
@@ -255,6 +252,15 @@ function Score(props) {
 			setPenaltyOut(sumPenalty.out);
 			setPenaltyIn(sumPenalty.in);
 			setPenaltyTotal(sumPenalty.in + sumPenalty.out);
+		}
+		if (evt.target.name.startsWith('gir_')) {
+			evt.target.value = digitVal(evt.target);
+			const gir = document.querySelectorAll(`input[name^='gir_']`);
+			const sumGir = sumScores(gir);
+
+			setGirOut(sumGir.out);
+			setGirIn(sumGir.in);
+			setGirTotal(sumGir.in + sumGir.out);
 		}
 		if (evt.target.name.startsWith('fairway_')) {
 			const fairway = document.querySelectorAll(`input[name^='fairway_']`);
@@ -349,6 +355,9 @@ function Score(props) {
 							penaltyOut={penaltyOut}
 							penaltyIn={penaltyIn}
 							penaltyTotal={penaltyTotal}
+							girOut={girOut}
+							girIn={girIn}
+							girTotal={girTotal}
 							advToggle={advToggle}
 							scoreChange={handleScoreChange} />
 					);

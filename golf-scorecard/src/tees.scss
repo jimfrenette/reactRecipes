@@ -122,6 +122,10 @@
 				}
 			}
 
+			&.sum~.hole {
+				margin-top: 1.5rem;
+			}
+
 			>div {
 				flex-direction: column;
 			}
@@ -130,9 +134,16 @@
 				display: none;
 			}
 
-			&.sum~.hole {
-				margin-top: 1.5rem;
+			.gir {
+				&:before {
+					content: '\02713';
+				}
 			}
+
+			input[name^='gir_'] {
+				display: none;
+			}
+
 		}
 
 		.footer {
