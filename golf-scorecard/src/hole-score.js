@@ -25,7 +25,7 @@ function HoleScore(props) {
 		const diff = strokes - putts;
 		const girDiff = par - 2;
 
-		// needed to change girInput value and then dispatchEvent manually so scoreChange is called for girInput
+		// needed to change girInput value and then dispatchEvent manually so onChange event is fired for girInput
 		var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
 
 		if (diff <= girDiff ) {
